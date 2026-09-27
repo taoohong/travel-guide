@@ -16,6 +16,7 @@ data/uploads/
 .rn_temp/
 .swc/
 *.log
+apps/miniapp/NUL
 .DS_Store
 Thumbs.db
 *.pem
