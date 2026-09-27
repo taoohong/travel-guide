@@ -35,6 +35,7 @@ pnpm test
 pnpm build                 # API
 pnpm admin:build           # Admin production build
 pnpm build:miniapp         # WeChat mini program build
+pnpm prod                  # Production builds for API, Admin, and mini program
 pnpm api:prisma:generate
 ```
 

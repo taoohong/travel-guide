@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "build": "pnpm --filter @travel-guide/api build",
+    "prod": "pnpm --filter @travel-guide/api build:prod && pnpm --filter @travel-guide/admin build:prod && pnpm --filter @travel-guide/miniapp build:prod",
     "admin:build": "pnpm --filter @travel-guide/admin build",
     "admin:dev": "pnpm --filter @travel-guide/admin dev",
     "build:miniapp": "pnpm --filter @travel-guide/miniapp build",

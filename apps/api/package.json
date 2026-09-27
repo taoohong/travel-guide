@@ -6,6 +6,7 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "build": "esbuild ./src/main.ts --bundle --platform=node --target=node22 --format=cjs --outfile=dist/main.cjs --external:@nestjs/* --external:@prisma/client --external:sharp --external:zod --external:reflect-metadata --external:rxjs --external:rxjs/*",
+    "build:prod": "pnpm run build",
     "start": "node dist/main.cjs",
     "dev": "tsx src/main.ts",
     "prisma:generate": "node node_modules/prisma/build/index.js generate",
