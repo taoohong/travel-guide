@@ -1,0 +1,32 @@
+{
+  "name": "travel-guide",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "build": "pnpm --filter @travel-guide/api build",
+    "admin:build": "pnpm --filter @travel-guide/admin build",
+    "admin:dev": "pnpm --filter @travel-guide/admin dev",
+    "build:miniapp": "pnpm --filter @travel-guide/miniapp build",
+    "dev:miniapp": "pnpm --filter @travel-guide/miniapp dev",
+    "api:prisma:generate": "pnpm --filter @travel-guide/api prisma:generate",
+    "api:prisma:migrate": "pnpm --filter @travel-guide/api prisma:migrate",
+    "api:prisma:deploy": "pnpm --filter @travel-guide/api prisma:deploy",
+    "api:seed": "pnpm --filter @travel-guide/api seed",
+    "db:verify": "pnpm --filter @travel-guide/api db:verify",
+    "api:smoke": "pnpm --filter @travel-guide/api smoke"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.1",
+    "vitest": "^5.0.1"
+  }
+}

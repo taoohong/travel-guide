@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - packages/*
+
+patchedDependencies:
+  '@tarojs/webpack5-prebundle@4.0.9': patches/@tarojs__webpack5-prebundle@4.0.9.patch

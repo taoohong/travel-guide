@@ -1,0 +1,83 @@
+@use '../../styles/tokens' as *;
+
+.detail-page { min-height: 100vh; padding: 28rpx 30rpx calc(70rpx + env(safe-area-inset-bottom)); background: #fff; color: $text-primary; }
+.country-hero { padding: 36rpx; overflow: hidden; border: 1px solid rgba(224,232,241,.8); border-radius: 34rpx; background: rgba(255,255,255,.92); box-shadow: $shadow; }
+.hero-topline { display: flex; align-items: flex-start; justify-content: space-between; }
+.hero-flag { flex: none; margin-left: 20rpx; font-size: 76rpx; line-height: 1.1; opacity: .94; }
+.hero-kicker,.sheet-kicker { display: block; color: $info-blue-strong; font-size: 19rpx; font-weight: 700; letter-spacing: 2.5rpx; text-transform: uppercase; }
+.hero-title { display: block; margin: 9rpx 0 0; color: $text-primary; font-size: 48rpx; font-weight: 750; }
+.hero-english { display: block; margin-top: 2rpx; color: $text-secondary; font-size: 23rpx; font-weight: 600; letter-spacing: 1.3rpx; }
+.hero-summary { display: block; margin-top: 24rpx; color: $text-secondary; font-size: 24rpx; line-height: 1.65; }
+.quick-facts { display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 28rpx; }
+.quick-fact { min-width: 130rpx; padding: 13rpx 18rpx; border-radius: 18rpx; background: $surface-subtle; }
+.visa-quick-fact { min-width: 150rpx; border: 1px solid rgba(45,107,224,.12); background: $info-blue-soft; }
+.visa-quick-fact .fact-value { color: $info-blue-strong; }
+.visa-fact-stay { display: block; margin-top: 5rpx; color: $text-secondary; font-size: 17rpx; }
+.fact-label { display: block; color: $text-secondary; font-size: 19rpx; }
+.fact-value { display: block; margin-top: 4rpx; color: $text-primary; font-size: 22rpx; font-weight: 650; }
+.risk-value { color: $danger-red; }
+.category-tabs-scroll { width: 100%; height: 82rpx; margin: 25rpx 0 8rpx; border-radius: 24rpx; background: #f1f4f8; white-space: nowrap; }
+.category-tabs-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+.category-tabs { display: inline-flex; align-items: center; gap: 8rpx; min-width: 100%; padding: 8rpx; box-sizing: border-box; white-space: nowrap; }
+.category-tab { flex: none; width: 116rpx; height: 66rpx; margin: 0; padding: 0 8rpx; border-radius: 19rpx; color: $text-secondary; background: transparent; font-size: 24rpx; line-height: 66rpx; white-space: nowrap; }
+.category-tab.is-active { color: $info-blue-strong; background: #fff; box-shadow: 0 5rpx 18rpx rgba(32,54,82,.1); font-weight: 700; }
+.safety-risk-card { display: flex; align-items: center; justify-content: space-between; }
+.safety-risk-value { flex: none; padding: 10rpx 18rpx; border-radius: 999rpx; color: $plan-orange-strong; background: $recommend-yellow-soft; font-size: 23rpx; font-weight: 700; }
+.category-tab::after,.expand-button::after,.retry-link::after,.visa-detail-button::after { border: 0; }
+.plan-action::after,.text-link::after,.copy-button::after,.sheet-actions button::after,.guide-dialog button::after,.undo-bar button::after { border: 0; }
+.guide-section { margin-top: 24rpx; padding: 32rpx; border-radius: 30rpx; background: #fff; box-shadow: $shadow; }
+.country-guide-card { margin-top: 20rpx; padding: 28rpx 30rpx 23rpx; border: 1px solid $divider; border-radius: 27rpx; background: #fff; box-shadow: 0 10rpx 32rpx rgba(26,48,74,.055); }
+.country-guide-title { display: block; margin-bottom: 13rpx; color: $text-primary; font-size: 29rpx; font-weight: 700; }
+.country-guide-copy { display: block; color: $text-secondary; font-size: 24rpx; line-height: 1.72; white-space: pre-wrap; word-break: break-word; }
+.country-guide-copy.is-collapsed { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 5; }
+.expand-button,.retry-link { display: block; margin: 14rpx 0 0; padding: 0; color: $info-blue-strong; background: transparent; font-size: 22rpx; text-align: left; }
+.section-heading,.guide-row { display: flex; align-items: center; justify-content: space-between; gap: 20rpx; }
+.section-title { display: block; color: $text-primary; font-size: 31rpx; font-weight: 700; }
+.guide-row { min-height: 100rpx; padding: 22rpx 0; border-top: 1px solid $divider; }
+.guide-section > .section-title + .guide-row,.section-heading + .guide-row,.subheading + .guide-row { margin-top: 18rpx; }
+.guide-main { min-width: 0; flex: 1; }
+.guide-title { display: block; color: $text-primary; font-size: 27rpx; font-weight: 600; }
+.guide-copy,.section-empty,.sheet-copy { display: block; margin-top: 7rpx; color: $text-secondary; font-size: 23rpx; line-height: 1.55; }
+.plan-action { width: 64rpx; height: 64rpx; margin: 0; padding: 0; border-radius: 50%; color: $info-blue-strong; background: $info-blue-soft; font-size: 34rpx; line-height: 64rpx; transition: transform .18s ease,background .18s ease; }
+.plan-action.is-added { color: $text-primary; background: $travel-green; transform: scale(.96); }
+.text-link,.copy-button { margin: 0; padding: 0; color: $info-blue-strong; background: transparent; font-size: 22rpx; }
+.visa-result { display: block; margin: 25rpx 0 9rpx; color: $info-blue-strong; font-size: 34rpx; font-weight: 700; }
+.visa-card-heading,.visa-summary-row { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; }
+.eyebrow { display: block; margin-bottom: 8rpx; color: $travel-green-strong; font-size: 18rpx; font-weight: 700; letter-spacing: 2rpx; }
+.visa-summary-row { justify-content: flex-start; flex-wrap: wrap; margin-top: 24rpx; }
+.visa-summary-row .visa-result { margin: 0; }
+.visa-pill { max-width: 100%; padding: 8rpx 14rpx; overflow: hidden; border-radius: 999rpx; color: $plan-orange-strong; background: $recommend-yellow-soft; font-size: 20rpx; text-overflow: ellipsis; white-space: nowrap; }
+.visa-intro { display: block; margin-top: 15rpx; color: $text-secondary; font-size: 23rpx; line-height: 1.6; }
+.visa-facts { display: grid; grid-template-columns: 1fr 1.2fr; gap: 12rpx; margin-top: 21rpx; padding: 19rpx; border-radius: 20rpx; background: $surface-subtle; }
+.visa-source { display: flex; flex-direction: column; gap: 7rpx; margin-top: 18rpx; color: $text-secondary; font-size: 20rpx; }
+.visa-detail-button { height: 70rpx; margin: 23rpx 0 0; border-radius: 18rpx; color: #fff; background: $info-blue-strong; font-size: 23rpx; line-height: 70rpx; }
+.visa-details { margin-top: 18rpx; padding: 20rpx; border-radius: 20rpx; background: #f8faff; }
+.visa-detail-copy { display: block; margin-bottom: 12rpx; color: $text-secondary; font-size: 22rpx; line-height: 1.65; white-space: pre-wrap; }
+.visa-error { display: flex; align-items: center; justify-content: space-between; gap: 12rpx; margin-top: 22rpx; color: $text-secondary; font-size: 22rpx; }
+.visa-error .retry-link { flex: none; margin: 0; }
+.visa-grid { display: grid; grid-template-columns: 1fr; gap: 10rpx; margin: 23rpx 0; padding: 20rpx; border-radius: 20rpx; background: $surface-subtle; color: $text-primary; font-size: 23rpx; }
+.freshness,.source-line { display: block; margin-top: 12rpx; color: $text-secondary; font-size: 21rpx; line-height: 1.5; }
+.freshness.is-old { padding: 14rpx 17rpx; border-radius: 15rpx; color: #806000; background: $recommend-yellow-soft; }
+.source-line { word-break: break-all; }
+.guide-source-footer { margin: 34rpx 5rpx 10rpx; padding: 24rpx 8rpx; border-top: 1px solid $divider; }
+.guide-source-title,.guide-source-date { display: block; color: $text-secondary; font-size: 20rpx; line-height: 1.6; }
+.subheading { display: block; margin-top: 28rpx; color: $text-primary; font-size: 23rpx; font-weight: 700; }
+.app-logo { width: 70rpx; height: 70rpx; border-radius: 16rpx; background: $surface-subtle; }
+.attraction-card { margin-top: 22rpx; overflow: hidden; border: 1px solid $divider; border-radius: 24rpx; background: #fff; }.attraction-image { display: block; width: 100%; height: 250rpx; background: $surface-subtle; }.attraction-content { padding: 24rpx; }.attraction-meta { display: block; margin-top: 6rpx; color: $text-secondary; font-size: 20rpx; }.tag-list { display: flex; flex-wrap: wrap; gap: 8rpx; margin-top: 15rpx; }.tag-list text { padding: 6rpx 12rpx; border-radius: 999rpx; color: $plan-orange-strong; background: $recommend-yellow-soft; font-size: 18rpx; }
+.guide-dialog-mask,.sheet-mask { position: fixed; z-index: 20; inset: 0; display: flex; align-items: center; justify-content: center; padding: 40rpx; background: rgba(24,33,47,.38); backdrop-filter: blur(12rpx); }
+.guide-dialog { padding: 42rpx 36rpx 30rpx; border-radius: 34rpx; background: #fff; box-shadow: 0 30rpx 100rpx rgba(24,33,47,.18); }
+.dialog-icon { display: block; color: $info-blue-strong; font-size: 34rpx; font-weight: 800; }
+.dialog-title,.sheet-title { display: block; margin: 18rpx 0 8rpx; color: $text-primary; font-size: 34rpx; font-weight: 700; }
+.dialog-copy { display: block; color: $text-secondary; font-size: 24rpx; line-height: 1.7; }
+.dialog-primary,.dialog-secondary { height: 76rpx; margin-top: 25rpx; border-radius: 999rpx; font-size: 25rpx; line-height: 76rpx; }
+.dialog-primary { color: #fff; background: $info-blue-strong; }.dialog-secondary { margin-top: 8rpx; color: $text-secondary; background: transparent; }
+.trip-sheet { width: 100%; padding: 42rpx 34rpx; border-radius: 34rpx; background: #fff; }
+.field-label { display: block; margin: 26rpx 0 10rpx; color: $text-primary; font-size: 22rpx; }
+.trip-input { box-sizing: border-box; height: 76rpx; padding: 0 22rpx; border: 1px solid $divider; border-radius: 18rpx; color: $text-primary; background: $surface-subtle; font-size: 25rpx; line-height: 74rpx; }
+.date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16rpx; }
+.form-error { display: block; margin-top: 18rpx; color: $danger-red; font-size: 22rpx; }
+.sheet-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 14rpx; margin-top: 32rpx; }
+.sheet-actions button { height: 76rpx; border-radius: 999rpx; font-size: 25rpx; line-height: 76rpx; }
+.sheet-secondary { color: $text-secondary; background: $surface-subtle; }.sheet-primary { color: #fff; background: $info-blue-strong; }
+.undo-bar { position: fixed; z-index: 12; right: 30rpx; bottom: calc(32rpx + env(safe-area-inset-bottom)); left: 30rpx; display: flex; align-items: center; justify-content: space-between; padding: 18rpx 25rpx; border-radius: 22rpx; color: #fff; background: rgba(24,33,47,.94); font-size: 23rpx; }
+.undo-bar button { margin: 0; padding: 0 16rpx; color: #b6cdf5; background: transparent; font-size: 23rpx; }

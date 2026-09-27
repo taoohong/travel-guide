@@ -1,0 +1,34 @@
+{
+  "appid": "wx185ac2fc939ec7e1",
+  "projectname": "travel-guide-miniapp",
+  "miniprogramRoot": "dist/",
+  "compileType": "miniprogram",
+  "setting": {
+    "es6": false,
+    "enhance": true,
+    "postcss": false,
+    "minified": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {}
+}

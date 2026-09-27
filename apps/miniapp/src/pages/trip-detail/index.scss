@@ -1,0 +1,57 @@
+@use '../../styles/tokens' as *;
+
+.trip-detail-page { min-height: 100vh; padding: 30rpx 38rpx calc(90rpx + env(safe-area-inset-bottom)); background: $page-background; color: $text-primary; }
+.trip-detail-hero { position: relative; margin-bottom: 30rpx; padding: 32rpx; overflow: hidden; border: 1rpx solid rgba(255,255,255,.92); border-radius: 34rpx; background: rgba(255,255,255,.86); box-shadow: 0 20rpx 55rpx rgba(24,33,47,.12); backdrop-filter: blur(18rpx); -webkit-backdrop-filter: blur(18rpx); }
+.trip-detail-kicker { display: block; color: $travel-green-strong; font-size: 19rpx; font-weight: 750; letter-spacing: 2rpx; }
+.trip-detail-title-row { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 12rpx; margin-top: 12rpx; }
+.trip-detail-title { display: block; min-width: 0; flex: 1; overflow: hidden; margin: 0; color: $text-primary; font-size: 41rpx; font-weight: 760; text-overflow: ellipsis; white-space: nowrap; }
+.trip-detail-collaboration { display: flex; flex: 0 0 auto; align-items: center; gap: 9rpx; }
+.trip-detail-avatar-stack { display: flex; align-items: center; }
+.trip-detail-avatar,.trip-detail-member-count { display: flex; width: 54rpx; height: 54rpx; flex: 0 0 54rpx; align-items: center; justify-content: center; overflow: hidden; margin-left: -11rpx; border: 3rpx solid #fff; border-radius: 50%; }
+.trip-detail-avatar { color: #fff; background: linear-gradient(135deg,$share-pink-strong,$accent-purple-strong); font-size: 21rpx; font-weight: 700; }
+.trip-detail-avatar:first-child { margin-left: 0; }.trip-detail-avatar image { width: 100%; height: 100%; }
+.trip-detail-member-count { color: $text-secondary; background: #E9EDF3; font-size: 17rpx; font-weight: 650; }
+.trip-detail-invite-add { display: flex; width: 60rpx; height: 60rpx; flex: 0 0 60rpx; align-items: center; justify-content: center; margin: 0; padding: 0; border-radius: 50%; color: $text-primary; background: $plan-orange; box-shadow: 0 8rpx 19rpx rgba(255,138,52,.2); font-size: 34rpx; line-height: 60rpx; }
+.trip-detail-invite-add::after { border: 0; }
+.trip-detail-route { display: block; overflow: hidden; margin-top: 10rpx; color: $text-primary; font-size: 24rpx; text-overflow: ellipsis; white-space: nowrap; }
+.trip-detail-meta { display: flex; align-items: center; justify-content: space-between; gap: 12rpx; margin-top: 20rpx; color: $text-secondary; font-size: 20rpx; }
+.destination-route-label { display: block; margin: 7rpx 0 10rpx; color: $text-secondary; font-size: 22rpx; letter-spacing: 1rpx; }
+.destination-stop { position: relative; display: block; height: 400rpx; margin: 0 0 12rpx; overflow: visible; }
+.destination-swipe-face { position: absolute; z-index: 1; inset: 0; transform: translateX(0); transition: transform 220ms cubic-bezier(.22,1,.36,1); }
+.destination-swipe-face.is-open { transform: translateX(-132rpx); }
+.destination-swipe-actions { position: absolute; z-index: 0; top: 52rpx; right: 0; width: 132rpx; height: 345rpx; overflow: hidden; border-radius: 0 38rpx 38rpx 0; background: $danger-red; }
+.destination-stop.is-open .destination-swipe-actions { z-index: 2; }
+.destination-swipe-delete { display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; margin: 0; padding: 0; border-radius: 0 38rpx 38rpx 0; color: #fff; background: $danger-red; font-size: 23rpx; font-weight: 650; }
+.destination-swipe-delete::after { border: 0; }
+.destination-card { position: absolute; top: 52rpx; right: 0; left: 0; height: 345rpx; overflow: hidden; padding: 33rpx; border-radius: 38rpx; color: $text-primary; box-shadow: 0 23rpx 45rpx rgba(24,33,47,.12); }
+.destination-swipe-face.is-open .destination-card { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.destination-card.theme-japan { background: linear-gradient(122deg,#FFB5C5,$share-pink 52%,$plan-orange); }
+.destination-card.theme-korea { background: linear-gradient(122deg,#B8A8FF,#A28FFF 45%,$info-blue); }
+.destination-card.theme-france { background: linear-gradient(122deg,#A9C8FF,$info-blue 62%,#8AD9D6); }
+.destination-card.theme-thailand { background: linear-gradient(122deg,#FFF0A6,$recommend-yellow 48%,$plan-orange); }
+.destination-card.theme-new-zealand { background: linear-gradient(122deg,#9AE8B9,$travel-green 58%,#79DCD0); }
+.destination-card.theme-fallback { background: linear-gradient(122deg,#B9F0D0,$travel-green-soft 63%,#BCECE5); }
+.destination-card-glow { position: absolute; right: -50rpx; bottom: -120rpx; width: 420rpx; height: 420rpx; border: 2rpx solid rgba(255,255,255,.24); border-radius: 50%; box-shadow: 0 0 0 48rpx rgba(255,255,255,.065),0 0 0 105rpx rgba(255,255,255,.035); }
+.destination-index { position: relative; z-index: 2; display: block; font-size: 21rpx; font-weight: 700; letter-spacing: 2rpx; opacity: .8; }
+.destination-name { position: relative; z-index: 2; display: block; margin-top: 45rpx; font-size: 62rpx; font-weight: 800; letter-spacing: 3rpx; text-shadow: 0 3rpx 12rpx rgba(24,33,47,.08); }
+.destination-english { position: relative; z-index: 2; display: block; margin-top: -5rpx; font-size: 21rpx; font-weight: 700; letter-spacing: 5rpx; text-transform: uppercase; opacity: .85; }
+.destination-caption { position: relative; z-index: 2; display: block; margin-top: 20rpx; font-size: 22rpx; opacity: .9; }
+.destination-arrow { position: absolute; z-index: 2; right: 30rpx; bottom: 25rpx; display: flex; width: 53rpx; height: 53rpx; align-items: center; justify-content: center; border: 1rpx solid rgba(255,255,255,.65); border-radius: 50%; font-size: 30rpx; }
+.destination-landmark { position: absolute; z-index: 3; pointer-events: none; filter: drop-shadow(0 15rpx 15rpx rgba(21,48,84,.17)); }
+.destination-fallback-art { position: absolute; z-index: 3; top: 30rpx; right: 20rpx; width: 260rpx; height: 260rpx; pointer-events: none; }
+.destination-fallback-art view:first-child { position: absolute; top: 0; right: 0; width: 140rpx; height: 140rpx; border: 18rpx solid rgba(255,255,255,.64); border-radius: 50%; }
+.destination-fallback-art view:nth-child(2) { position: absolute; right: 42rpx; bottom: 0; width: 110rpx; height: 180rpx; border-radius: 75rpx 75rpx 15rpx 15rpx; background: rgba(255,255,255,.85); }
+.destination-fallback-art view:last-child { position: absolute; right: 0; bottom: 0; width: 185rpx; height: 30rpx; border-radius: 22rpx; background: rgba(255,255,255,.92); }
+.destination-add { width: 100%; height: 88rpx; margin: 8rpx 0 24rpx; border: 2rpx dashed $info-blue; border-radius: 25rpx; color: $info-blue-strong; background: $info-blue-soft; font-size: 24rpx; line-height: 86rpx; }.destination-add::after { border: 0; }
+.destination-empty { display: flex; min-height: 240rpx; flex-direction: column; align-items: center; justify-content: center; gap: 18rpx; border: 2rpx dashed $info-blue; border-radius: 30rpx; color: $text-secondary; font-size: 23rpx; }
+.destination-empty button { margin: 0; color: $info-blue-strong; background: transparent; font-size: 23rpx; }.destination-empty button::after { border: 0; }
+.trip-detail-open-plan { height: 78rpx; margin: 22rpx 0 6rpx; border-radius: 999rpx; color: #fff; background: $info-blue-strong; font-size: 24rpx; line-height: 78rpx; }.trip-detail-open-plan::after { border: 0; }
+.trip-detail-invite-mask { position: fixed; z-index: 50; inset: 0; display: flex; align-items: center; justify-content: center; padding: 40rpx; background: rgba(24,33,47,.36); }
+.trip-detail-invite-sheet { width: 100%; padding: 40rpx; border-radius: 34rpx; background: #fff; box-shadow: 0 25rpx 70rpx rgba(24,33,47,.18); }
+.trip-detail-invite-kicker { color: $travel-green-strong; font-size: 19rpx; font-weight: 750; letter-spacing: 2rpx; }
+.trip-detail-invite-title { display: block; margin-top: 12rpx; color: $text-primary; font-size: 34rpx; font-weight: 740; }
+.trip-detail-invite-copy { display: block; margin: 12rpx 0 19rpx; color: $text-secondary; font-size: 22rpx; line-height: 1.5; }
+.trip-detail-share-button,.trip-detail-copy-button { height: 76rpx; margin: 12rpx 0 0; border-radius: 999rpx; font-size: 23rpx; line-height: 76rpx; }
+.trip-detail-share-button { color: #fff; background: $travel-green-strong; }.trip-detail-copy-button { color: $text-secondary; background: $surface-subtle; }
+.trip-detail-danger-button { color: $danger-red; background: $danger-red-soft; }
+.trip-detail-share-button::after,.trip-detail-copy-button::after { border: 0; }

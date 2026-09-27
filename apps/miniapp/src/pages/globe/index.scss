@@ -1,0 +1,103 @@
+@use '../../styles/tokens' as *;
+
+.full-globe-page {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  color: $text-primary;
+  background: $page-background;
+}
+
+.globe-topbar { display: flex; align-items: center; gap: 20rpx; padding-right: 28rpx; padding-left: 30rpx; }
+.globe-nav-title { position: fixed; z-index: 19; left: 0; display: flex; width: 100%; align-items: center; justify-content: center;
+  box-sizing: border-box; color: #000; font-size: 30rpx; font-weight: 800; line-height: 1; text-align: center; pointer-events: none; }
+.globe-back { position: fixed; z-index: 20; left: 30rpx; display: flex; width: 54rpx; flex: 0 0 54rpx; align-items: center; justify-content: center;
+  color: $text-primary; font-size: 66rpx; line-height: 1; }
+.globe-heading { display: flex; min-width: 0; flex: 1; flex-direction: column; }
+.globe-title { margin-top: 5rpx; color: #000; font-size: 38rpx; font-weight: 800; line-height: 1.15; }
+.globe-subtitle { margin-top: 4rpx; color: $text-secondary; font-size: 20rpx; line-height: 1.2; }
+.globe-done { display: flex; min-width: 120rpx; height: 70rpx; flex: 0 0 auto; align-items: center; justify-content: center;
+  margin: 0; padding: 0 20rpx; border: 1rpx solid $divider; border-radius: 999rpx;
+  color: $info-blue-strong; background: $info-blue-soft; font-size: 22rpx; font-weight: 600; }
+.globe-done::after { border: 0; }
+.globe-done[disabled] { color: $text-weak; background: $surface-subtle; }
+
+.full-globe-stage { position: relative; display: flex; width: 100%; height: min(110vw, 48vh); min-height: 0; flex: 0 0 auto; align-items: center; justify-content: center; }
+.full-globe-stage .globe-render-surface { position: relative; display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; }
+.full-globe-stage .globe-canvas { position: absolute; top: 50%; left: 50%; width: min(110vw, 48vh); height: min(110vw, 48vh);
+  transform: translate(-50%, -50%); pointer-events: none; }
+.full-globe-stage .globe-render-surface::before { position: absolute; top: 50%; left: 50%; width: min(114vw, 50vh); height: min(114vw, 50vh);
+  transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle,
+    transparent 79%, rgba(77,143,255,.015) 83%, rgba(77,143,255,.15) 88%, rgba(77,143,255,.07) 92%, transparent 100%);
+  filter: blur(18rpx); pointer-events: none; content: ''; }
+.full-globe-stage .globe-atmosphere { display: none; }
+.globe-placeholder { position: absolute; z-index: 1; display: flex; align-items: center; justify-content: center;
+  color: $text-secondary; font-size: 20rpx; }
+
+.globe-bottom { display: flex; min-height: 0; flex: 1; flex-direction: column; overflow: hidden; padding: 0 30rpx calc(20rpx + env(safe-area-inset-bottom)); transform: translateY(-14rpx); }
+.globe-search-box { display: flex; height: 68rpx; flex: 0 0 68rpx; align-items: center; gap: 16rpx; margin-bottom: 17rpx; padding: 0 20rpx;
+  border: 1rpx solid $divider; border-radius: 18rpx; box-sizing: border-box; background: $surface-subtle; }
+.globe-search-icon { position: relative; width: 22rpx; height: 22rpx; flex: 0 0 22rpx; border: 3rpx solid $text-secondary-soft; border-radius: 50%; box-sizing: border-box; }
+.globe-search-icon::after { position: absolute; right: -7rpx; bottom: -4rpx; width: 9rpx; height: 3rpx; transform: rotate(45deg); border-radius: 3rpx; background: $text-secondary-soft; content: ''; }
+.globe-search-input { min-width: 0; flex: 1; color: $text-primary; font-size: 21rpx; }
+.globe-search-clear { padding: 0 4rpx; color: $text-secondary; font-size: 30rpx; line-height: 1; }
+.globe-focus { display: flex; align-items: center; justify-content: space-between; gap: 12rpx; margin-bottom: 18rpx;
+  color: $text-primary; font-size: 21rpx; font-weight: 600; }
+.globe-focus text:last-child { color: $info-blue-strong; white-space: nowrap; }
+.globe-continent-scroll,.globe-country-scroll,.globe-route-scroll { width: 100%; white-space: nowrap; }
+.globe-continent-row,.globe-country-row,.globe-route-row { display: flex; width: max-content; align-items: center; gap: 12rpx; padding: 4rpx 2rpx 14rpx; }
+.globe-continent-row { padding-bottom: 18rpx; }
+.globe-continent-row .continent-pill { min-width: 98rpx; height: 60rpx; margin: 0; padding: 0 20rpx; border: 1rpx solid rgba(178,201,224,.1);
+  border-radius: 999rpx; color: $text-secondary; background: $surface-subtle; font-size: 21rpx; line-height: 58rpx; }
+.globe-continent-row .continent-pill::after { border: 0; }
+.globe-continent-row .continent-pill.is-active { border-color: rgba(76,141,255,.25); color: $info-blue-strong; background: $info-blue-soft; }
+.globe-country-prompt { flex: 0 0 auto; margin: 0 0 11rpx; color: $text-primary; font-size: 21rpx; font-weight: 650; }
+.globe-country-scroll { height: 0; min-height: 0; flex: 1; }
+.globe-country-row { width: 100%; flex-direction: column; align-items: stretch; gap: 11rpx; padding: 3rpx 2rpx 10rpx; box-sizing: border-box; }
+.globe-country-chip { display: flex; width: 100%; min-width: 0; min-height: 58rpx; flex: 0 0 auto; align-items: center; box-sizing: border-box; border: 1rpx solid rgba(178,201,224,.1);
+  border-radius: 18rpx; color: $text-primary; background: $surface-subtle; font-size: 22rpx; }
+.globe-country-chip > view { display: flex; min-width: 0; min-height: 58rpx; flex: 1; align-items: center; justify-content: space-between; gap: 14rpx; padding: 0 17rpx; }
+.globe-country-chip > view text:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.globe-country-chip > view text:last-child { color: $text-secondary; font-weight: 700; }
+.globe-country-chip.is-selected { border-color: rgba(76,141,255,.32); background: $info-blue-soft; }
+.globe-country-chip.is-selected > view text:last-child { color: $info-blue-strong; }
+.globe-country-chip.is-focused { box-shadow: inset 0 0 0 1rpx rgba(76,141,255,.18); }
+.globe-country-chip button { width: 48rpx; height: 48rpx; margin: 0 5rpx 0 0; padding: 0; border-radius: 15rpx;
+  color: $info-blue-strong; background: #e3efff; font-size: 25rpx; line-height: 48rpx; }
+.globe-country-chip button::after { border: 0; }
+.globe-route-panel { flex: 0 0 auto; margin-top: 27rpx; padding: 8rpx 13rpx 5rpx; border: 1rpx solid $divider; border-radius: 18rpx; box-sizing: border-box; background: #fff; }
+.globe-route-heading { display: block; color: $text-secondary; font-size: 18rpx; font-weight: 650; }
+.globe-route-empty { display: block; padding: 7rpx 0 5rpx; color: $text-secondary-soft; font-size: 18rpx; }
+.globe-route-scroll { margin-top: 1rpx; }
+.globe-route-row { gap: 9rpx; padding-top: 4rpx; padding-bottom: 10rpx; }
+.globe-route-stop { display: flex; height: 52rpx; align-items: center; gap: 10rpx; padding: 0 14rpx 0 17rpx; border: 1rpx solid rgba(178,201,224,.12);
+  border-radius: 999rpx; color: $text-primary; background: $surface-subtle; font-size: 19rpx; }
+.globe-route-remove { color: $text-secondary; font-size: 26rpx; line-height: 1; }
+.globe-loading,.globe-error,.globe-empty { display: block; margin-top: 7rpx; color: $text-secondary; font-size: 20rpx; }
+.globe-error { color: $danger-red; }
+
+.globe-sheet-mask { position: fixed; z-index: 50; inset: 0; display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(24,33,47,.32); }
+.globe-choice-sheet { display: flex; width: 100%; max-height: 90vh; flex-direction: column; overflow-y: auto; padding: 16rpx 34rpx calc(22rpx + env(safe-area-inset-bottom));
+  border-radius: 34rpx 34rpx 0 0; box-sizing: border-box; background: $page-background; box-shadow: 0 -16rpx 55rpx rgba(24,33,47,.12); }
+.globe-sheet-handle { width: 64rpx; height: 6rpx; align-self: center; margin-bottom: 28rpx; border-radius: 999rpx; background: #dce1e8; }
+.globe-sheet-kicker { color: $text-secondary-soft; font-size: 16rpx; font-weight: 700; letter-spacing: 2rpx; }
+.globe-sheet-title { margin-top: 8rpx; color: $text-primary; font-size: 30rpx; font-weight: 700; }
+.globe-sheet-summary { margin: 8rpx 0 20rpx; color: $text-secondary; font-size: 20rpx; }
+.globe-sheet-primary,.globe-sheet-secondary,.globe-sheet-cancel { display: flex; width: 100%; height: 78rpx; align-items: center; justify-content: center;
+  margin: 0 0 12rpx; border: 1rpx solid $divider; border-radius: 20rpx; color: $text-primary; background: $surface-subtle; font-size: 22rpx; }
+.globe-sheet-primary { border-color: $info-blue; color: #fff; background: $info-blue; font-weight: 650; }
+.globe-sheet-primary::after,.globe-sheet-secondary::after,.globe-sheet-cancel::after { border: 0; }
+.globe-sheet-cancel { margin-top: 2rpx; margin-bottom: 0; color: $text-secondary; background: transparent; }
+.globe-sheet-error { margin: 0 0 10rpx; color: $danger-red; font-size: 20rpx; text-align: center; }
+.globe-trip-label { display: block; margin: 4rpx 0 7rpx; color: $text-primary; font-size: 20rpx; font-weight: 650; }
+.globe-trip-caption { display: block; margin: 0 0 6rpx; color: $text-secondary; font-size: 17rpx; }
+.globe-trip-input { display: flex; width: 100%; height: 72rpx; align-items: center; box-sizing: border-box; margin: 0 0 13rpx; padding: 0 17rpx;
+  border: 1rpx solid $divider; border-radius: 17rpx; color: $text-primary; background: #fff; font-size: 20rpx; }
+.globe-trip-date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12rpx; }
+.globe-trip-textarea { width: 100%; min-height: 100rpx; box-sizing: border-box; margin: 0 0 14rpx; padding: 14rpx 17rpx;
+  border: 1rpx solid $divider; border-radius: 17rpx; color: $text-primary; background: #fff; font-size: 20rpx; }

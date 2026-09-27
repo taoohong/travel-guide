@@ -1,0 +1,5 @@
+[
+  { "code": "JP", "continentCode": "AS", "latitude": 36.2, "longitude": 138.25 },
+  { "code": "KR", "continentCode": "AS", "latitude": 36.5, "longitude": 127.75 },
+  { "code": "FR", "continentCode": "EU", "latitude": 46.6, "longitude": 2.2 }
+]

@@ -1,0 +1,8 @@
+[
+  { "code": "AS", "name": "亚洲", "latitude": 34, "longitude": 105 },
+  { "code": "EU", "name": "欧洲", "latitude": 52, "longitude": 13 },
+  { "code": "NA", "name": "北美洲", "latitude": 42, "longitude": -100 },
+  { "code": "AF", "name": "非洲", "latitude": 5, "longitude": 20 },
+  { "code": "SA", "name": "南美洲", "latitude": -15, "longitude": -60 },
+  { "code": "OC", "name": "大洋洲", "latitude": -25, "longitude": 135 }
+]

@@ -1,0 +1,6 @@
+@use '../../styles/tokens' as *;
+
+.state-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18rpx; padding: 64rpx 30rpx; color: $text-secondary; text-align: center; background: rgba(255,255,255,.8); border-radius: 28rpx; }
+.state-mark { display: flex; align-items: center; justify-content: center; width: 58rpx; height: 58rpx; border-radius: 50%; background: $info-blue-soft; color: $info-blue-strong; font-size: 38rpx; }
+.state-action { margin-top: 10rpx; padding: 0 30rpx; height: 70rpx; line-height: 70rpx; border-radius: 35rpx; color: $info-blue-strong; background: $info-blue-soft; font-size: 26rpx; }
+.offline-notice { margin: 0 0 20rpx; padding: 17rpx 22rpx; color: $info-blue-strong; background: $info-blue-soft; border-radius: 16rpx; font-size: 24rpx; }

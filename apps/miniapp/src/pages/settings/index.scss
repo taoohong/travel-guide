@@ -1,0 +1,9 @@
+@use '../../styles/tokens' as *;
+
+.settings-page { min-height: 100vh; padding: 48rpx 40rpx calc(80rpx + env(safe-area-inset-bottom)); background: $page-background; }
+.tab-eyebrow { display: block; color: $accent-purple-strong; font-size: 22rpx; font-weight: 700; letter-spacing: 3rpx; }
+.tab-title { display: block; margin: 12rpx 0 15rpx; color: $text-primary; font-size: 54rpx; font-weight: 700; }
+.tab-lead { display: block; margin-bottom: 40rpx; color: $text-secondary; font-size: 27rpx; line-height: 1.55; }
+.setting-row { display: flex; align-items: center; justify-content: space-between; min-height: 128rpx; margin-top: 24rpx; padding: 26rpx 32rpx; border-radius: 26rpx; background: $surface-subtle; color: $text-primary; font-size: 29rpx; }
+.setting-row > text:last-child { color: $info-blue-strong; }
+.setting-hint { display: block; margin-top: 7rpx; color: $text-secondary; font-size: 22rpx; }

@@ -1,0 +1,12 @@
+@use '../../styles/tokens' as *;
+
+.trip-edit-page { min-height: 100vh; padding: 52rpx 38rpx calc(90rpx + env(safe-area-inset-bottom)); background: $page-background; color: $text-primary; }
+.trip-edit-eyebrow { display: block; color: $info-blue-strong; font-size: 20rpx; font-weight: 750; letter-spacing: 3rpx; }
+.trip-edit-title { display: block; margin-top: 14rpx; font-size: 48rpx; font-weight: 750; }
+.trip-edit-lead { display: block; margin-top: 10rpx; color: $text-secondary; font-size: 24rpx; }
+.trip-edit-label { display: block; margin: 38rpx 0 13rpx; color: $text-primary; font-size: 25rpx; font-weight: 700; }
+.trip-edit-input,.trip-edit-textarea { box-sizing: border-box; width: 100%; min-height: 82rpx; padding: 20rpx 23rpx; border: 1rpx solid $divider; border-radius: $radius-md; color: $text-primary; background: #fff; font-size: 25rpx; }
+.trip-edit-date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15rpx; }.trip-edit-date-row .trip-edit-input { display: flex; align-items: center; margin-top: 8rpx; color: $text-secondary; }
+.trip-edit-caption { display: block; color: $text-secondary; font-size: 20rpx; }.trip-edit-clear { display: block; margin-top: 8rpx; color: $info-blue-strong; font-size: 20rpx; }
+.trip-edit-textarea { height: 200rpx; }.trip-edit-error { display: block; margin-top: 22rpx; color: $danger-red; font-size: 22rpx; }
+.trip-edit-save { height: 88rpx; margin-top: 38rpx; border-radius: 999rpx; color: #fff; background: $info-blue-strong; font-size: 26rpx; line-height: 88rpx; }.trip-edit-save::after { border: 0; }

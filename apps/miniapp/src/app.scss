@@ -1,0 +1,5 @@
+@use './styles/tokens' as *;
+
+page { background: $page-background; color: $text-primary; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+view, text, button { box-sizing: border-box; }
+button { margin: 0; }

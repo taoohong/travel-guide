@@ -1,0 +1,41 @@
+@use '../../styles/tokens' as *;
+
+.trip-ticket { position: relative; margin: 20rpx 0 26rpx; overflow: hidden; border: 0; border-radius: 28rpx; background: $page-background; box-shadow: 0 24rpx 52rpx rgba(24,33,47,.12), 0 6rpx 16rpx rgba(24,33,47,.05); }
+.trip-ticket::before { position: absolute; z-index: 3; right: 174rpx; bottom: -16rpx; width: 32rpx; height: 32rpx; box-sizing: border-box; border-radius: 50%; background: $page-background; pointer-events: none; content: ''; }
+.trip-ticket::after { position: absolute; z-index: 2; top: 0; bottom: 16rpx; right: 190rpx; border-left: 2rpx dashed #c8bfdc; pointer-events: none; content: ''; }
+.trip-ticket-header { position: relative; display: flex; min-height: 82rpx; align-items: stretch; color: $text-primary; }
+.trip-ticket-header::before { position: absolute; z-index: 3; top: -16rpx; right: 174rpx; width: 32rpx; height: 32rpx; box-sizing: border-box; border-radius: 50%; background: $page-background; pointer-events: none; content: ''; }
+.trip-ticket-header-main { display: flex; min-width: 0; flex: 1; align-items: center; padding: 12rpx 25rpx; background: $travel-green; }
+.trip-ticket-header-stub { display: flex; width: 190rpx; flex: 0 0 auto; align-items: center; padding: 12rpx 17rpx; background: $travel-green; }
+.trip-ticket.accent-green .trip-ticket-header-main,.trip-ticket.accent-green .trip-ticket-header-stub { background: #34D18A; }
+.trip-ticket.accent-teal .trip-ticket-header-main,.trip-ticket.accent-teal .trip-ticket-header-stub { background: #38BED0; }
+.trip-ticket.accent-purple .trip-ticket-header-main,.trip-ticket.accent-purple .trip-ticket-header-stub { background: #A98AF2; }
+.trip-ticket.accent-pink .trip-ticket-header-main,.trip-ticket.accent-pink .trip-ticket-header-stub { background: #F58FAE; }
+.trip-ticket.accent-orange .trip-ticket-header-main,.trip-ticket.accent-orange .trip-ticket-header-stub { background: #FFAD52; }
+.trip-ticket-title { min-width: 0; overflow: hidden; font-size: 27rpx; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; }
+.trip-ticket-number { font-size: 16rpx; font-weight: 700; letter-spacing: 1rpx; opacity: .82; }
+.trip-ticket-body { display: flex; min-height: 220rpx; }
+.trip-ticket-main { display: flex; min-width: 0; flex: 1; flex-direction: column; justify-content: space-between; padding: 24rpx 20rpx 20rpx 24rpx; border-bottom-right-radius: 16rpx; background: #fff; }
+.trip-ticket-route { display: flex; min-width: 0; align-items: center; gap: 8rpx; }
+.trip-ticket-city { display: flex; min-width: 0; flex: 0 1 145rpx; flex-direction: column; gap: 4rpx; }
+.trip-ticket-city text:first-child { color: $text-secondary; font-size: 15rpx; font-weight: 650; letter-spacing: 1.4rpx; }
+.trip-ticket-city text:last-child { overflow: hidden; color: $accent-purple-strong; font-size: 25rpx; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+.trip-ticket-flight { min-width: 45rpx; flex: 1; overflow: hidden; color: $text-weak; font-size: 17rpx; text-align: center; white-space: nowrap; }
+.trip-ticket-city-to { text-align: right; }
+.trip-ticket-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 8rpx; margin-top: 24rpx; color: $text-secondary; font-size: 18rpx; }
+.trip-ticket-footer-details { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 4rpx; }
+.trip-ticket-footer-details text { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trip-ticket-duration { color: $text-secondary; font-size: 17rpx; }
+.trip-ticket-view-link { color: $info-blue-strong; font-weight: 650; white-space: nowrap; }
+.trip-ticket-stub { position: relative; display: flex; width: 190rpx; flex: 0 0 auto; flex-direction: column; justify-content: center; gap: 10rpx; padding: 19rpx 17rpx; border-bottom-left-radius: 16rpx; background: $surface-subtle; }
+.trip-ticket-brand { color: $text-secondary; font-size: 15rpx; font-weight: 750; line-height: 1.25; letter-spacing: .8rpx; }
+.trip-ticket-status { align-self: flex-start; padding: 5rpx 9rpx; border-radius: 999rpx; color: $travel-green-strong; background: $travel-green-soft; font-size: 18rpx; }
+.trip-ticket-status.status-completed { color: $text-secondary; background: $surface-subtle; }
+.trip-ticket-role { align-self: flex-start; color: $info-blue-strong; font-size: 18rpx; font-weight: 700; }
+.trip-ticket-members { display: flex; align-items: center; margin-top: 2rpx; }
+.trip-ticket-member-avatar { display: flex; width: 31rpx; height: 31rpx; align-items: center; justify-content: center; overflow: hidden; margin-left: -5rpx; border: 2rpx solid $surface-subtle; border-radius: 50%; color: #fff; background: linear-gradient(135deg,$share-pink-strong,$accent-purple-strong); font-size: 13rpx; }
+.trip-ticket-member-avatar:first-child { margin-left: 0; }.trip-ticket-member-avatar image { width: 100%; height: 100%; }
+.trip-ticket-member-more { margin-left: 5rpx; color: $text-secondary; font-size: 14rpx; }
+.trip-ticket-stat { display: flex; flex-direction: column; gap: 2rpx; text-align: left; }
+.trip-ticket-stat text:first-child { color: $text-secondary; font-size: 17rpx; }
+.trip-ticket-stat text:last-child { color: $text-primary; font-size: 22rpx; font-weight: 700; }

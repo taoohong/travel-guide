@@ -1,0 +1,15 @@
+@use '../../styles/tokens' as *;
+.plan-edit-page { min-height: 100vh; padding: 52rpx 38rpx calc(55rpx + env(safe-area-inset-bottom)); background: $page-background; color: $text-primary; }
+.edit-eyebrow { display: block; color: $info-blue-strong; font-size: 21rpx; font-weight: 700; letter-spacing: 3rpx; }
+.edit-title { display: block; margin-top: 14rpx; font-size: 50rpx; font-weight: 750; }
+.edit-lead { display: block; margin-top: 12rpx; color: $text-secondary; font-size: 25rpx; }
+.edit-label { display: block; margin: 45rpx 0 15rpx; color: $text-primary; font-size: 25rpx; font-weight: 700; }
+.edit-input,.edit-notes { width: 100%; min-height: 92rpx; padding: 22rpx 25rpx; border: 1rpx solid $divider; border-radius: $radius-md; color: $text-primary; background: $surface-subtle; font-size: 28rpx; }
+.edit-date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16rpx; }.edit-date-row .edit-input { display: flex; align-items: center; font-size: 25rpx; }
+.edit-clear-date { min-width: 120rpx; min-height: 70rpx; margin: 10rpx 0 0; padding: 0; color: $info-blue-strong; background: transparent; font-size: 23rpx; text-align: left; }.edit-clear-date::after { border: 0; }
+.edit-notes { height: 210rpx; }
+.edit-status,.edit-type { display: flex; align-items: center; justify-content: space-between; gap: 20rpx; min-height: 112rpx; margin-top: 24rpx; padding: 15rpx 24rpx; border-radius: $radius-md; background: $surface-subtle; font-size: 26rpx; }
+.edit-status text { display: block; }.edit-hint,.edit-type text:last-child { margin-top: 5rpx; color: $text-secondary; font-size: 21rpx; }
+.edit-save { height: 96rpx; margin-top: 55rpx; border-radius: 999rpx; color: #fff; background: $info-blue-strong; box-shadow: 0 16rpx 35rpx rgba(40,104,217,.2); font-size: 28rpx; line-height: 96rpx; }.edit-save::after { border: 0; }
+.edit-delete { margin-top: 25rpx; color: $danger-red; background: transparent; font-size: 24rpx; }.edit-delete::after { border: 0; }
+.form-error { display: block; margin-top: 20rpx; color: $danger-red; font-size: 23rpx; }

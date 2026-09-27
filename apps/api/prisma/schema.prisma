@@ -1,0 +1,812 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TripStatus {
+  DRAFT
+  PREPARING
+  DEPARTING
+  TRAVELING
+  RETURNING
+  COMPLETED
+}
+
+enum TripMemberRole {
+  OWNER
+  MEMBER
+}
+
+enum TripMemberStatus {
+  ACTIVE
+  LEFT
+}
+
+enum PlanStage {
+  PREPARING
+  DEPARTING
+  TRAVELING
+  RETURNING
+}
+
+enum PlanItemType {
+  VISA_MATERIAL
+  PACKING_ITEM
+  ATTRACTION
+}
+
+enum PlanScope {
+  TRIP
+  COUNTRY
+  DESTINATION
+}
+
+enum PlanSourceType {
+  GUIDE
+  ATTRACTION
+  USER
+}
+
+enum VisaType {
+  UNKNOWN
+  VISA_REQUIRED
+  VISA_FREE
+}
+
+enum VisaRequirementType {
+  REQUIRED
+  VISA_FREE
+  VISA_ON_ARRIVAL
+  E_VISA
+  CONDITIONAL
+  UNKNOWN
+}
+
+enum CountryGuideSectionCategory {
+  COUNTRY_OVERVIEW
+  ENTRY_RESIDENCE
+  TRAVEL_RISK
+  SAFETY
+  TRANSPORT
+  PRICE_MEDICAL
+  PRACTICAL_INFO
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContentModule {
+  country
+  countryGuide
+  visa
+  attraction
+  transport
+  packing
+  travelTip
+  city
+}
+
+enum OperationAction {
+  CREATE
+  UPDATE
+  DELETE
+  PUBLISH
+  UNPUBLISH
+  LOGIN
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  CONTENT_ADMIN
+  REVIEWER
+  VIEWER
+}
+
+enum TipImportance {
+  NORMAL
+  TIP
+  IMPORTANT
+  WARNING
+}
+
+enum MediaUsage {
+  ATTRACTION
+  MEMORY
+  CONTENT
+  USER_AVATAR
+}
+
+model Continent {
+  code            String        @id
+  nameZh          String
+  nameEn          String
+  sortOrder       Int           @default(0)
+  enabled         Boolean       @default(true)
+  centerLatitude  Float?
+  centerLongitude Float?
+  defaultZoom     Float?
+  highlightColor  String?
+  version         Int           @default(1)
+  status          ContentStatus @default(DRAFT)
+  effectiveFrom   DateTime?
+  effectiveTo     DateTime?
+  lastVerifiedAt  DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  countries       Country[]
+}
+
+model Country {
+  code             String                @id
+  continentCode    String
+  nameZh           String
+  nameEn           String
+  flagUrl          String?
+  currencyCode     String?
+  languages        String[]              @default([])
+  timeZone         String?
+  phoneCode        String?
+  latitude         Float
+  longitude        Float
+  online           Boolean               @default(false)
+  sortOrder        Int                   @default(0)
+  recommendation   Int                   @default(0)
+  completeness     Int                   @default(0)
+  summary          String?
+  version          Int                   @default(1)
+  status           ContentStatus         @default(DRAFT)
+  effectiveFrom    DateTime?
+  effectiveTo      DateTime?
+  lastVerifiedAt   DateTime?
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  continent        Continent             @relation(fields: [continentCode], references: [code])
+  cities           City[]
+  transportOptions TransportOption[]
+  packingLinks     CountryPacking[]
+  travelTips       TravelTip[]
+  appLinks         CountryTravelApp[]
+  attractions      Attraction[]
+  tripDestinations TripDestination[]
+  hotels           Hotel[]
+  checkIns         CheckIn[]
+  guideSections    CountryGuideSection[]
+  mediaItems       CountryMedia[]
+
+  @@index([continentCode, online])
+}
+
+model City {
+  id             String        @id @default(cuid())
+  countryCode    String
+  code           String
+  nameZh         String
+  nameEn         String
+  latitude       Float?
+  longitude      Float?
+  sortOrder      Int           @default(0)
+  version        Int           @default(1)
+  status         ContentStatus @default(DRAFT)
+  effectiveFrom  DateTime?
+  effectiveTo    DateTime?
+  lastVerifiedAt DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  country        Country       @relation(fields: [countryCode], references: [code])
+
+  @@unique([countryCode, code])
+}
+
+model PassportRegion {
+  code         String       @id
+  nameZh       String
+  nameEn       String
+  enabled      Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  visaPolicies VisaPolicy[]
+  users        User[]
+}
+
+model VisaPolicy {
+  id                          String              @id @default(cuid())
+  passportRegion              String
+  destinationCountryCode      String
+  visaRequirement             VisaRequirementType @default(UNKNOWN)
+  visaType                    VisaType            @default(UNKNOWN)
+  title                       String
+  corePolicy                  String[]            @default([])
+  maxStayDays                 Int?
+  passportRequired            Boolean?
+  passportValidityMonths      Int?
+  passportValidityRequirement String?
+  entrySummary                String?
+  requirementText             String?
+  feeAmount                   Decimal?            @db.Decimal(10, 2)
+  feeCurrency                 String?
+  feeNote                     String?
+  processingTime              String?
+  notes                       String[]            @default([])
+  sourceName                  String?
+  sourceProvider              String?
+  retrievedAt                 DateTime?
+  sourceUrl                   String?
+  version                     Int                 @default(1)
+  status                      ContentStatus       @default(DRAFT)
+  effectiveFrom               DateTime?
+  effectiveTo                 DateTime?
+  lastVerifiedAt              DateTime?
+  createdAt                   DateTime            @default(now())
+  updatedAt                   DateTime            @updatedAt
+  passport                    PassportRegion      @relation(fields: [passportRegion], references: [code])
+  requirements                VisaRequirement[]
+
+  @@unique([passportRegion, destinationCountryCode])
+  @@index([lastVerifiedAt])
+}
+
+model CountryGuideSection {
+  id              String                      @id @default(cuid())
+  countryCode     String
+  category        CountryGuideSectionCategory
+  title           String
+  subtitle        String?
+  content         String
+  sortOrder       Int                         @default(0)
+  sourceKey       String?
+  sourceProvider  String
+  sourceUrl       String
+  sourceUpdatedAt DateTime?
+  importedAt      DateTime?
+  retrievedAt     DateTime?
+  lastVerifiedAt  DateTime?
+  contentHash     String?
+  version         Int                         @default(1)
+  status          ContentStatus               @default(DRAFT)
+  effectiveFrom   DateTime?
+  effectiveTo     DateTime?
+  createdAt       DateTime                    @default(now())
+  updatedAt       DateTime                    @updatedAt
+  country         Country                     @relation(fields: [countryCode], references: [code], onDelete: Cascade)
+
+  @@unique([countryCode, sourceKey])
+  @@index([countryCode, category, sortOrder])
+}
+
+model VisaRequirement {
+  id             String        @id @default(cuid())
+  visaPolicyId   String
+  title          String
+  description    String?
+  required       Boolean       @default(true)
+  sortOrder      Int           @default(0)
+  actionable     Boolean       @default(false)
+  targetStage    PlanStage?
+  itemType       PlanItemType?
+  scope          PlanScope?
+  dedupeKey      String?
+  version        Int           @default(1)
+  status         ContentStatus @default(DRAFT)
+  effectiveFrom  DateTime?
+  effectiveTo    DateTime?
+  lastVerifiedAt DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  visaPolicy     VisaPolicy    @relation(fields: [visaPolicyId], references: [id], onDelete: Cascade)
+
+  @@index([visaPolicyId, sortOrder])
+}
+
+model TransportOption {
+  id             String        @id @default(cuid())
+  countryCode    String
+  cityCode       String?
+  name           String
+  kind           String
+  description    String?
+  paymentMethod  String?
+  priceInfo      String?
+  operatingHours String?
+  notes          String?
+  sortOrder      Int           @default(0)
+  actionable     Boolean       @default(false)
+  targetStage    PlanStage?
+  itemType       PlanItemType?
+  scope          PlanScope?
+  dedupeKey      String?
+  version        Int           @default(1)
+  status         ContentStatus @default(DRAFT)
+  effectiveFrom  DateTime?
+  effectiveTo    DateTime?
+  lastVerifiedAt DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  country        Country       @relation(fields: [countryCode], references: [code])
+
+  @@index([countryCode, kind])
+}
+
+model PackingItem {
+  id             String           @id @default(cuid())
+  code           String           @unique
+  name           String
+  description    String?
+  category       String?
+  universal      Boolean          @default(false)
+  dedupeKey      String?
+  actionable     Boolean          @default(true)
+  targetStage    PlanStage?       @default(PREPARING)
+  itemType       PlanItemType?    @default(PACKING_ITEM)
+  scope          PlanScope?       @default(TRIP)
+  version        Int              @default(1)
+  status         ContentStatus    @default(DRAFT)
+  effectiveFrom  DateTime?
+  effectiveTo    DateTime?
+  lastVerifiedAt DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  countries      CountryPacking[]
+}
+
+model CountryPacking {
+  id            String      @id @default(cuid())
+  countryCode   String
+  packingItemId String
+  sortOrder     Int         @default(0)
+  country       Country     @relation(fields: [countryCode], references: [code], onDelete: Cascade)
+  packingItem   PackingItem @relation(fields: [packingItemId], references: [id], onDelete: Cascade)
+
+  @@unique([countryCode, packingItemId])
+}
+
+model CountryMedia {
+  id           String  @id @default(cuid())
+  countryCode  String
+  mediaAssetId String
+  path         String
+  url          String
+  alt          String?
+  sortOrder    Int     @default(0)
+  country      Country @relation(fields: [countryCode], references: [code], onDelete: Cascade)
+
+  @@unique([countryCode, mediaAssetId])
+  @@index([countryCode, sortOrder])
+}
+
+model TravelTip {
+  id             String        @id @default(cuid())
+  countryCode    String
+  cityCode       String?
+  title          String
+  content        String
+  category       String
+  importance     TipImportance @default(NORMAL)
+  sortOrder      Int           @default(0)
+  actionable     Boolean       @default(false)
+  targetStage    PlanStage?
+  itemType       PlanItemType?
+  scope          PlanScope?
+  dedupeKey      String?
+  version        Int           @default(1)
+  status         ContentStatus @default(DRAFT)
+  effectiveFrom  DateTime?
+  effectiveTo    DateTime?
+  lastVerifiedAt DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  country        Country       @relation(fields: [countryCode], references: [code])
+}
+
+model TravelApp {
+  id             String             @id @default(cuid())
+  code           String             @unique
+  name           String
+  logoUrl        String?
+  iosUrl         String?
+  androidUrl     String?
+  purpose        String?
+  recommendation String?
+  actionable     Boolean            @default(false)
+  targetStage    PlanStage?
+  itemType       PlanItemType?
+  scope          PlanScope?
+  dedupeKey      String?
+  version        Int                @default(1)
+  status         ContentStatus      @default(DRAFT)
+  effectiveFrom  DateTime?
+  effectiveTo    DateTime?
+  lastVerifiedAt DateTime?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  countries      CountryTravelApp[]
+}
+
+model CountryTravelApp {
+  id          String    @id @default(cuid())
+  countryCode String
+  travelAppId String
+  cityCode    String?
+  sortOrder   Int       @default(0)
+  country     Country   @relation(fields: [countryCode], references: [code], onDelete: Cascade)
+  travelApp   TravelApp @relation(fields: [travelAppId], references: [id], onDelete: Cascade)
+
+  @@unique([countryCode, travelAppId])
+}
+
+model Attraction {
+  id             String            @id @default(cuid())
+  countryCode    String
+  cityCode       String?
+  nameZh         String
+  nameEn         String?
+  description    String?
+  latitude       Float?
+  longitude      Float?
+  coverUrl       String?
+  visitMinutes   Int?
+  openingHours   String?
+  ticketInfo     String?
+  website        String?
+  category       String?
+  tags           String[]          @default([])
+  recommendation Int               @default(0)
+  sortOrder      Int               @default(0)
+  actionable     Boolean           @default(false)
+  targetStage    PlanStage?
+  itemType       PlanItemType?
+  scope          PlanScope?
+  dedupeKey      String?
+  version        Int               @default(1)
+  status         ContentStatus     @default(DRAFT)
+  effectiveFrom  DateTime?
+  effectiveTo    DateTime?
+  lastVerifiedAt DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  country        Country           @relation(fields: [countryCode], references: [code])
+  images         AttractionImage[]
+  checkIns       CheckIn[]
+  memories       Memory[]
+
+  @@index([countryCode, status])
+}
+
+model AttractionImage {
+  id           String     @id @default(cuid())
+  attractionId String
+  path         String
+  url          String
+  alt          String?
+  sortOrder    Int        @default(0)
+  attraction   Attraction @relation(fields: [attractionId], references: [id], onDelete: Cascade)
+
+  @@index([attractionId, sortOrder])
+}
+
+model User {
+  id                 String               @id @default(cuid())
+  uid                String               @unique @default(uuid())
+  nickname           String
+  avatarUrl          String?
+  passportRegion     String               @default("CN")
+  showPlanAddGuide   Boolean              @default(true)
+  locale             String               @default("zh-CN")
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  passport           PassportRegion       @relation(fields: [passportRegion], references: [code])
+  identities         AuthIdentity[]
+  trips              Trip[]
+  tripMemberships    TripMember[]
+  planCompletions    PlanItemCompletion[]
+  paidTripExpenses   TripExpense[]        @relation("TripExpensePayer")
+  createdTripInvites TripInvite[]         @relation("TripInviteCreator")
+  anchors            UserAnchor[]
+}
+
+model AuthIdentity {
+  id             String   @id @default(cuid())
+  userId         String
+  provider       String
+  providerUserId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerUserId])
+  @@index([userId, provider])
+}
+
+model Trip {
+  id           String            @id @default(cuid())
+  userId       String
+  title        String
+  notes        String?
+  travelers    String[]          @default([])
+  status       TripStatus        @default(DRAFT)
+  startDate    DateTime?
+  endDate      DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  user         User              @relation(fields: [userId], references: [id])
+  destinations TripDestination[]
+  planItems    PlanItem[]
+  expenses     TripExpense[]
+  flights      Flight[]
+  hotels       Hotel[]
+  checkIns     CheckIn[]
+  memories     Memory[]
+  members      TripMember[]
+  invites      TripInvite[]
+  anchors      UserAnchor[]
+
+  @@index([userId, status])
+  @@index([userId, startDate])
+}
+
+model TripMember {
+  id        String           @id @default(cuid())
+  tripId    String
+  userId    String
+  role      TripMemberRole   @default(MEMBER)
+  status    TripMemberStatus @default(ACTIVE)
+  joinedAt  DateTime         @default(now())
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  trip      Trip             @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, userId])
+  @@index([userId, status])
+  @@index([tripId, status])
+}
+
+model UserAnchor {
+  id         String   @id @default(cuid())
+  userId     String
+  type       String
+  tripId     String?
+  occurredAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trip       Trip?    @relation(fields: [tripId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, type])
+  @@index([userId, occurredAt])
+  @@index([tripId])
+}
+
+model TripInvite {
+  id              String    @id @default(cuid())
+  tripId          String
+  createdByUserId String
+  tokenHash       String    @unique
+  expiresAt       DateTime
+  maxUses         Int       @default(20)
+  useCount        Int       @default(0)
+  revokedAt       DateTime?
+  createdAt       DateTime  @default(now())
+  trip            Trip      @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  createdBy       User      @relation("TripInviteCreator", fields: [createdByUserId], references: [id], onDelete: Cascade)
+
+  @@index([tripId, revokedAt, expiresAt])
+}
+
+model TripDestination {
+  id            String    @id @default(cuid())
+  tripId        String
+  countryCode   String
+  continentCode String
+  cityCode      String?
+  orderIndex    Int
+  arrivalDate   DateTime?
+  departureDate DateTime?
+  isOrigin      Boolean   @default(false)
+  trip          Trip      @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  country       Country   @relation(fields: [countryCode], references: [code])
+
+  @@unique([tripId, orderIndex])
+}
+
+model PlanItem {
+  id                String               @id @default(cuid())
+  tripId            String
+  stage             PlanStage
+  itemType          PlanItemType
+  scope             PlanScope
+  title             String
+  description       String?
+  sourceType        PlanSourceType
+  sourceId          String?
+  sourceCountryCode String?
+  dedupeKey         String?
+  dedupeHash        String?
+  sortOrder         Int                  @default(0)
+  done              Boolean              @default(false)
+  doneAt            DateTime?
+  planDate          DateTime?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  trip              Trip                 @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  completions       PlanItemCompletion[]
+
+  @@unique([tripId, dedupeHash])
+  @@index([tripId, stage])
+}
+
+model PlanItemCompletion {
+  id          String   @id @default(cuid())
+  planItemId  String
+  userId      String
+  completedAt DateTime @default(now())
+  planItem    PlanItem @relation(fields: [planItemId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([planItemId, userId])
+  @@index([userId])
+}
+
+model TripExpense {
+  id                 String   @id @default(cuid())
+  tripId             String
+  category           String
+  amountCents        Int
+  payerUserId        String
+  participantUserIds String[] @default([])
+  note               String?
+  createdAt          DateTime @default(now())
+  trip               Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  payer              User     @relation("TripExpensePayer", fields: [payerUserId], references: [id], onDelete: Cascade)
+
+  @@index([tripId, createdAt])
+  @@index([payerUserId])
+}
+
+model Flight {
+  id                   String    @id @default(cuid())
+  tripId               String
+  airline              String?
+  flightNumber         String?
+  departureCountryCode String?
+  departureCityCode    String?
+  arrivalCountryCode   String?
+  arrivalCityCode      String?
+  departureAt          DateTime?
+  arrivalAt            DateTime?
+  notes                String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  trip                 Trip      @relation(fields: [tripId], references: [id], onDelete: Cascade)
+}
+
+model Hotel {
+  id                 String    @id @default(cuid())
+  tripId             String
+  countryCode        String
+  cityCode           String?
+  name               String
+  address            String?
+  checkInDate        DateTime?
+  checkOutDate       DateTime?
+  confirmationNumber String?
+  notes              String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  trip               Trip      @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  country            Country   @relation(fields: [countryCode], references: [code])
+}
+
+model CheckIn {
+  id           String      @id @default(cuid())
+  tripId       String
+  attractionId String?
+  countryCode  String
+  cityCode     String?
+  checkedInAt  DateTime    @default(now())
+  latitude     Float?
+  longitude    Float?
+  note         String?
+  trip         Trip        @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  attraction   Attraction? @relation(fields: [attractionId], references: [id])
+  country      Country     @relation(fields: [countryCode], references: [code])
+  memories     Memory[]
+
+  @@index([tripId, checkedInAt])
+}
+
+model Memory {
+  id           String        @id @default(cuid())
+  tripId       String
+  checkInId    String?
+  attractionId String?
+  travelDate   DateTime?
+  checkedInAt  DateTime?
+  text         String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  trip         Trip          @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  checkIn      CheckIn?      @relation(fields: [checkInId], references: [id])
+  attraction   Attraction?   @relation(fields: [attractionId], references: [id])
+  photos       MemoryPhoto[]
+
+  @@index([tripId, travelDate])
+}
+
+model MemoryPhoto {
+  id        String @id @default(cuid())
+  memoryId  String
+  path      String
+  url       String
+  sortOrder Int    @default(0)
+  memory    Memory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+}
+
+model ContentVersion {
+  module          ContentModule @id
+  version         Int           @default(0)
+  changedByEntity String?
+  changedById     String?
+  updatedAt       DateTime      @updatedAt
+}
+
+model ContentRevision {
+  id            String        @id @default(cuid())
+  module        ContentModule
+  entityType    String
+  entityId      String
+  version       Int
+  before        Json?
+  after         Json?
+  changedFields Json?
+  adminUserId   String?
+  createdAt     DateTime      @default(now())
+  adminUser     AdminUser?    @relation(fields: [adminUserId], references: [id])
+
+  @@index([entityType, entityId, version])
+}
+
+model OperationLog {
+  id          String          @id @default(cuid())
+  action      OperationAction
+  targetType  String
+  targetId    String?
+  targetLabel String
+  changes     Json            @default("[]")
+  requestId   String?
+  adminUserId String?
+  createdAt   DateTime        @default(now())
+  adminUser   AdminUser?      @relation(fields: [adminUserId], references: [id])
+
+  @@index([createdAt])
+  @@index([targetType, targetId])
+}
+
+model MediaAsset {
+  id        String     @id @default(cuid())
+  path      String     @unique
+  url       String
+  width     Int
+  height    Int
+  bytes     Int
+  mimeType  String
+  usage     MediaUsage
+  createdAt DateTime   @default(now())
+}
+
+model AdminUser {
+  id            String            @id @default(cuid())
+  username      String            @unique
+  passwordHash  String
+  role          AdminRole         @default(VIEWER)
+  isActive      Boolean           @default(true)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  revisions     ContentRevision[]
+  operationLogs OperationLog[]
+}

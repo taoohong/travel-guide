@@ -1,0 +1,14 @@
+@use '../../styles/tokens' as *;
+.floating-tab-dock { position: fixed; z-index: 30; right: 32rpx; bottom: calc(16rpx + env(safe-area-inset-bottom)); left: 32rpx; display: flex; align-items: center; gap: 20rpx; }
+.floating-tab-bar { display: flex; min-width: 0; height: 116rpx; flex: 1; align-items: stretch; padding: 8rpx; border: 1rpx solid rgba(255,255,255,.88); border-radius: 999rpx; background: rgba(255,255,255,.86); box-shadow: 0 20rpx 55rpx rgba(24,33,47,.12); backdrop-filter: blur(18rpx); -webkit-backdrop-filter: blur(18rpx); }
+.floating-tab { display: flex; min-width: 0; min-height: 0; flex: 1; align-self: stretch; flex-direction: column; align-items: center; justify-content: center; gap: 4rpx; border-radius: 999rpx; color: $text-secondary; font-size: 21rpx; font-weight: 600; transition: background 220ms ease; }
+.floating-tab.is-active.is-travel { color: $travel-green-strong; background: $travel-green-soft; }
+.floating-tab.is-active.is-plan { color: $plan-orange-strong; background: $plan-orange-soft; }
+.floating-tab.is-active.is-profile { color: $accent-purple-strong; background: $accent-purple-soft; }
+.floating-tab-icon-wrap { display: flex; width: 100%; flex: 0 0 48rpx; align-items: center; justify-content: center; }
+.floating-tab-icon { display: block; width: 48rpx; height: 48rpx; flex: 0 0 48rpx; }
+.floating-tab-label { display: block; width: 100%; text-align: center; }
+.floating-globe-button { display: flex; width: 116rpx; height: 116rpx; flex: 0 0 116rpx; align-items: center; justify-content: center; margin: 0; padding: 0; overflow: hidden; border: 1rpx solid rgba(255,255,255,.88); border-radius: 50%; background: rgba(255,255,255,.86); box-shadow: 0 20rpx 55rpx rgba(24,33,47,.12); backdrop-filter: blur(18rpx); -webkit-backdrop-filter: blur(18rpx); transition: transform 150ms ease, box-shadow 150ms ease; }
+.floating-globe-button::after { border: 0; }
+.floating-globe-button-pressed { transform: scale(.94); box-shadow: 0 10rpx 28rpx rgba(24,33,47,.1); }
+.floating-globe-icon { display: block; width: 100rpx; height: 100rpx; border-radius: 50%; }

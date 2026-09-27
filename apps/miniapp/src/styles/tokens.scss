@@ -1,0 +1,39 @@
+// Dopamine palette: semantic roles with contrast-safe ink variants.
+$travel-green: #35D07F;
+$travel-green-strong: #137A42;
+$travel-green-soft: #E9FAF0;
+$plan-orange: #FF8A34;
+$plan-orange-strong: #B84C00;
+$plan-orange-soft: #FFF1E6;
+$recommend-yellow: #FFD84D;
+$recommend-yellow-soft: #FFF8D8;
+$info-blue: #4C8DFF;
+$info-blue-strong: #2868D9;
+$info-blue-soft: #EFF5FF;
+$share-pink: #FF6B8A;
+$share-pink-strong: #BE3659;
+$share-pink-soft: #FFF0F4;
+$accent-purple: #8B6CFF;
+$accent-purple-strong: #6346D2;
+$accent-purple-soft: #F3F0FF;
+$danger-red: #C0392B;
+$danger-red-soft: #FFF0F1;
+
+$text-primary: #18212F;
+$text-secondary: #626E80;
+$text-secondary-soft: #7A8495; // reserve for disabled/decorative metadata, not body copy
+$text-weak: #A8B0BC;
+$page-background: #FFFFFF;
+$surface-subtle: #F7F8FA;
+$divider: #EEF1F5;
+
+$stage-preparing: $recommend-yellow;
+$stage-preparing-strong: #806000;
+$stage-departing: $plan-orange;
+$stage-traveling: $travel-green;
+$stage-returning: $accent-purple;
+
+$radius-sm: 20rpx;
+$radius-md: 32rpx;
+$radius-lg: 44rpx;
+$shadow: 0 14rpx 40rpx rgba(24, 33, 47, .07);

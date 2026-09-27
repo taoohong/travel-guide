@@ -1,0 +1,38 @@
+{
+  "name": "@travel-guide/miniapp",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "taro build --type weapp --watch",
+    "build": "taro build --type weapp",
+    "smoke:module-d": "node scripts/module-d-smoke.mjs"
+  },
+  "dependencies": {
+    "@tarojs/components": "4.0.9",
+    "@tarojs/react": "4.0.9",
+    "@tarojs/runtime": "4.0.9",
+    "@tarojs/shared": "4.0.9",
+    "@tarojs/taro": "4.0.9",
+    "@travel-guide/api-client": "workspace:*",
+    "@travel-guide/constants": "workspace:*",
+    "@travel-guide/core": "workspace:*",
+    "@travel-guide/types": "workspace:*",
+    "react": "18.3.1",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.29.7",
+    "@babel/runtime": "^7.29.7",
+    "@tarojs/cli": "4.0.9",
+    "@tarojs/plugin-framework-react": "4.0.9",
+    "@tarojs/plugin-platform-weapp": "4.0.9",
+    "@tarojs/webpack5-runner": "4.0.9",
+    "@types/react": "18.3.31",
+    "babel-preset-taro": "4.0.9",
+    "dotenv": "^16.6.1",
+    "sass": "^1.104.1",
+    "typescript": "5.9.3"
+  }
+}
